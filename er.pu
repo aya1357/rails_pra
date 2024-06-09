@@ -1,0 +1,100 @@
+@startuml app_book
+' hide the spot
+hide circle
+
+' avoid problems with angled crows feet
+skinparam linetype ortho
+
+entity "Users" as users {
+  id : bigint
+  --
+  name : string
+  name_kana : string
+  email : string
+  password : string
+  password_confirmation : string
+  encrypted_password : string
+  etc..deviseで必要なカラム
+}
+
+entity "Libraries" as libraries {
+  id : bigint
+  --
+  name : string
+  name_kana : string
+  author : string
+  author_kana : string
+  total_pages : int
+  category : string
+  published_at
+}
+
+entity "Books" as books {
+  id : bigint
+  --
+  user_id : bigint <<FK>>
+  title : string
+  url : string
+  status : boolean
+}
+
+
+entity "Authors" as authors {
+  id : bigint
+  --
+  name : string
+  name_kana : string
+}
+
+entity "Categories" as categories {
+  id : bigint
+  --
+  name : string
+}
+
+entity "BookAuthors" as books_authors {
+  id : bigint
+  --
+  book_id : bigint <<FK>>
+  author_id : bigint <<FK>>
+}
+
+entity "BookCategories" as books_categories {
+  id : bigint
+  --
+  book_id : bigint <<FK>>
+  category_id : bigint <<FK>>
+}
+
+entity "ReadingPlans" as reading_plans {
+  id : bigint
+  --
+  book_id : bigint <<FK>>
+  start_day : date <<読書開始日>>
+  day_of_week : string <<読む曜日>>
+  total_pages : int <<総ページ数>>
+  start_page : int <<読み始めるページ>>
+  end_page : int <<読み終えるページ>>
+  target_pages : int <<1日目標ページ>>
+}
+
+entity "ReadingHistories" as logs {
+  id : bigint
+  --
+  user_id : bigint <<FK>>
+  book_id : bigint <<FK>>
+  date : date <<読書した日>>
+  read_pages : int <<読書したページ数>>
+}
+
+books ||--o{ reading_plans
+users ||--o{ reading_plans
+books ||--o{ logs
+users ||--o{ logs
+users ||--o{ books
+books ||--o{ books_authors
+authors ||--o{ books_authors
+books ||--o{ books_categories
+categories ||--o{ books_categories
+
+@enduml
