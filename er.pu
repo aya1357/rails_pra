@@ -1,0 +1,100 @@
+@startuml app_book
+' hide the spot
+hide circle
+
+' avoid problems with angled crows feet
+skinparam linetype ortho
+
+entity "users" as users {
+  id : bigint
+  --
+  name : string
+  name_kana : string
+  email : string
+  password : string
+  password_confirmation : string
+  encrypted_password : string
+  etc..deviseで必要なカラム
+}
+
+entity "libraries" as libraries {
+  id : bigint
+  --
+  name : string
+  name_kana : string
+  author : string
+  author_kana : string
+  total_pages : int
+  category : string
+  published_at
+}
+
+entity "Books" as books {
+  id : bigint
+  --
+  user_id : int <<FK>>
+  title : string
+  url : string
+  status : boolean
+}
+
+
+entity "Authors" as authors {
+  id : bigint
+  --
+  name : string
+  name_kana : string
+}
+
+entity "Categories" as categories {
+  id : bigint
+  --
+  name : string
+}
+
+entity "BookAuthors" as books_authors {
+  id : bigint
+  --
+  book_id : bigint
+  author_id : bigint
+}
+
+entity "BookCategories" as books_categories {
+  id : bigint
+  --
+  book_id : bigint
+  category_id : bigint
+}
+
+entity "ReadingPlans" as reading_plans {
+  id : int
+  --
+  start_day : date
+  day_of_week : string
+  total_pages : int
+  start_page : int
+  end_page : int
+  target_pages : int
+  book_id : int
+}
+
+entity "ReadingHistories" as logs {
+  id : int
+  --
+  user_id : int
+  book_id : int
+  date : date
+  read_pages : int
+}
+
+books ||--o{ reading_plans
+users ||--o{ reading_plans
+books ||--o{ logs
+users ||--o{ logs
+users ||--o{ books
+books ||--o{ books_authors
+authors ||--o{ books_authors
+books ||--o{ books_categories
+categories ||--o{ books_categories
+
+@enduml
