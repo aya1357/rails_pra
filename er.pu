@@ -5,7 +5,7 @@ hide circle
 ' avoid problems with angled crows feet
 skinparam linetype ortho
 
-entity "users" as users {
+entity "Users" as users {
   id : bigint
   --
   name : string
@@ -17,7 +17,7 @@ entity "users" as users {
   etc..deviseで必要なカラム
 }
 
-entity "libraries" as libraries {
+entity "Libraries" as libraries {
   id : bigint
   --
   name : string
@@ -32,7 +32,7 @@ entity "libraries" as libraries {
 entity "Books" as books {
   id : bigint
   --
-  user_id : int <<FK>>
+  user_id : bigint <<FK>>
   title : string
   url : string
   status : boolean
@@ -55,36 +55,36 @@ entity "Categories" as categories {
 entity "BookAuthors" as books_authors {
   id : bigint
   --
-  book_id : bigint
-  author_id : bigint
+  book_id : bigint <<FK>>
+  author_id : bigint <<FK>>
 }
 
 entity "BookCategories" as books_categories {
   id : bigint
   --
-  book_id : bigint
-  category_id : bigint
+  book_id : bigint <<FK>>
+  category_id : bigint <<FK>>
 }
 
 entity "ReadingPlans" as reading_plans {
-  id : int
+  id : bigint
   --
-  start_day : date
-  day_of_week : string
-  total_pages : int
-  start_page : int
-  end_page : int
-  target_pages : int
-  book_id : int
+  book_id : bigint <<FK>>
+  start_day : date <<読書開始日>>
+  day_of_week : string <<読む曜日>>
+  total_pages : int <<総ページ数>>
+  start_page : int <<読み始めるページ>>
+  end_page : int <<読み終えるページ>>
+  target_pages : int <<1日目標ページ>>
 }
 
 entity "ReadingHistories" as logs {
-  id : int
+  id : bigint
   --
-  user_id : int
-  book_id : int
-  date : date
-  read_pages : int
+  user_id : bigint <<FK>>
+  book_id : bigint <<FK>>
+  date : date <<読書した日>>
+  read_pages : int <<読書したページ数>>
 }
 
 books ||--o{ reading_plans
