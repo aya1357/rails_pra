@@ -1,2 +1,2 @@
 # README
-[![Image from Gyazo](https://i.gyazo.com/080e4e0ab0a0e7956267f757a4b84949.png)](https://gyazo.com/080e4e0ab0a0e7956267f757a4b84949)
+<img src="https://i.gyazo.com/63890267a5872b9548079110ae5db58d.webp" width="600">
